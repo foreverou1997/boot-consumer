@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: boot-consumer
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 39.105.161.6:8848
+server:
+  port: 8081
