@@ -7,6 +7,7 @@ import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,9 @@ public class TestController {
 
     @Autowired
     private DiscoveryClient discoveryClient;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     @RequestMapping("/test")
     public String test(){
@@ -37,7 +41,10 @@ public class TestController {
                 System.out.println(s+"   ：   "+map.get(s));
             }
         });
-        return "success";
+
+        // 调用生产者测试接口
+        String result = restTemplate.getForObject(serverList.get(0).getUri()+"/test", String.class);
+        return result;
     }
 
 }
